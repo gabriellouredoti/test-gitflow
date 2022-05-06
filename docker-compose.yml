@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: './'
+      dockerfile: './.docker/Dockerfile'
+    container_name: "api-server"
+    command: sh -c "npm run start"
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    links:
+      - database
+      - database_statics
+    depends_on:
+      - database
+      - database_statics
+      
+  database:
+    build:
+      context: '../database/.'
+      dockerfile: './.docker/Dockerfile'
+    container_name: "api-db"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: knowledge
+      POSTGRES_PASSWORD: p37fgh1
+
+  database_statics:
+    build: 
+      context: '../database_statics/.'
+      dockerfile: './.docker/Dockerfile'
+    container_name: api-db-stastics
+    ports:
+      - 27017:27017

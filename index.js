@@ -11,6 +11,8 @@ const io = require("socket.io")(http, {
 });
 
 const consign = require("consign");
+
+// /gfdgfdg
 const db = require("./config/db");
 
 app.db = db;
